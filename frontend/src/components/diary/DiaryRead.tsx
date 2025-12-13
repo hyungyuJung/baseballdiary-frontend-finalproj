@@ -37,11 +37,13 @@ const DiaryRead: React.FC<DiaryReadProps> = ({ diary, onEdit, onClose, onDelete 
         <div className="h-full flex flex-col">
             {/* Header */}
             <div className="flex-none p-6 border-b border-bg-tertiary flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-text-accent">
-                    {formattedDate} 일기
-                </h2>
-                <div className={`px-4 py-1 rounded-full border-2 font-bold ${resultColor} border-current`}>
-                    {resultText}
+                <div className="flex items-center gap-3">
+                    <h2 className="text-2xl font-bold text-text-accent">
+                        {formattedDate} 일기
+                    </h2>
+                    <div className={`px-3 py-1 rounded-full text-sm font-bold ${resultColor} bg-bg-tertiary`}>
+                        {resultText}
+                    </div>
                 </div>
             </div>
 

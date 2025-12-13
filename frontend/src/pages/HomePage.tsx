@@ -44,6 +44,22 @@ const HomePage: React.FC = () => {
                     onDateClick={handleDateClick}
                     refreshKey={refreshKey}
                 />
+
+                {/* Result Legend */}
+                <div className="flex justify-start gap-4 mt-6 max-w-4xl mx-auto px-4">
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-accent-win"></div>
+                        <span className="text-xs text-text-secondary">승리</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-accent-draw"></div>
+                        <span className="text-xs text-text-secondary">무승부</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-accent-loss"></div>
+                        <span className="text-xs text-text-secondary">패배</span>
+                    </div>
+                </div>
             </main>
 
             <DiaryModal

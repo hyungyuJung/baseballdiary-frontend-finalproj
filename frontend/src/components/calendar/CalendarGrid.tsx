@@ -87,17 +87,16 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({ currentDate, onDateClick, r
                                     </span>
 
                                     {summary && (
-                                        <div className={`mt-1 p-1 rounded-md w-full text-center
-                                            ${summary.result === 'win' ? 'bg-accent-win text-white' :
-                                                summary.result === 'loss' ? 'bg-accent-loss text-white' :
-                                                    summary.result === 'draw' ? 'bg-accent-draw text-black' : 'bg-gray-400 text-white'}
-                                        `}>
-                                            <div className="text-[10px] font-bold leading-tight">
-                                                {summary.result === 'win' ? '승리' :
-                                                    summary.result === 'loss' ? '패배' :
-                                                        summary.result === 'draw' ? '무승부' : '-'}
-                                            </div>
-                                            <div className="text-[10px] truncate leading-tight opacity-90">
+                                        <div className="mt-2 flex flex-col items-center justify-center relative h-full">
+                                            {/* Corner Indicator */}
+                                            <div className={`absolute top-0 right-0 w-3 h-3 rounded-full 
+                                                ${summary.result === 'win' ? 'bg-accent-win' :
+                                                    summary.result === 'loss' ? 'bg-accent-loss' :
+                                                        summary.result === 'draw' ? 'bg-accent-draw' : 'bg-gray-400'}
+                                            `}></div>
+
+                                            {/* Opponent Team Name - Large Font */}
+                                            <div className="text-sm font-bold text-text-primary truncate w-full text-center">
                                                 {summary.opponentTeam}
                                             </div>
                                         </div>

@@ -14,28 +14,32 @@
 }
 
 :root {
-  /* Premium Deep Dark Theme Colors */
-  --bg-primary: #121212;
-  --bg-secondary: #1E1E1E;
-  --bg-tertiary: #2C2C2C;
+  /* Clean White Theme Colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F3F4F6;
+  /* Gray-100 */
+  --bg-tertiary: #E5E7EB;
+  /* Gray-200 */
 
-  --text-primary: #E0E0E0;
-  --text-secondary: #A0A0A0;
-  --text-accent: #FFFFFF;
+  --text-primary: #111827;
+  /* Gray-900 */
+  --text-secondary: #4B5563;
+  /* Gray-600 */
+  --text-accent: #000000;
 
-  /* Baseball-specific Accents */
-  --accent-win: #4CAF50;
-  /* Success Green */
-  --accent-loss: #E53935;
-  /* Danger Red */
-  --accent-draw: #FFC107;
-  /* Warning Amber */
-  --accent-cancel: #9E9E9E;
-  /* Grey */
+  /* Baseball-specific Accents - Refined per user request */
+  --accent-win: #10B981;
+  /* Emerald-500 (Green) */
+  --accent-draw: #9CA3AF;
+  /* Gray-400 (Gray) */
+  --accent-loss: #EF4444;
+  /* Red-500 (Red) */
+  --accent-cancel: #D1D5DB;
+  /* Gray-300 */
 
   /* Brand/Interactive */
-  --brand-primary: #3178C6;
-  /* KBO Blue-ish */
+  --brand-primary: #2563EB;
+  /* Blue-600 */
 }
 
 body {
