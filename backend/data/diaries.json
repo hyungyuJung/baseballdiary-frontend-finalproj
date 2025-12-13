@@ -1,0 +1,21 @@
+[
+  {
+    "date": "2025-12-13",
+    "gameInfo": {
+      "myTeam": "Lotte Giants",
+      "opponentTeam": "Samsung Lions",
+      "myScore": 1,
+      "opponentScore": 14,
+      "result": "loss",
+      "stadium": "대구삼성라이온즈파크",
+      "broadcaster": "SPOTV"
+    },
+    "viewingInfo": {
+      "type": "home"
+    },
+    "content": "대패 ㅠㅠ",
+    "id": "1765631832653",
+    "createdAt": "2025-12-13T13:17:12.653Z",
+    "updatedAt": "2025-12-13T13:17:12.653Z"
+  }
+]

@@ -5,7 +5,7 @@
     "team2": "Samsung Lions",
     "score1": 11,
     "score2": 0,
-    "stadium": "Daegu",
+    "stadium": "광주기아챔피언스필드",
     "broadcaster": "KBS N Sports"
   },
   {
@@ -14,7 +14,7 @@
     "team2": "LG Twins",
     "score1": 1,
     "score2": 18,
-    "stadium": "Daegu",
+    "stadium": "광주기아챔피언스필드",
     "broadcaster": "MBC Sports+"
   },
   {
@@ -23,8 +23,8 @@
     "team2": "Doosan Bears",
     "score1": 9,
     "score2": 12,
-    "stadium": "Jamsil",
-    "broadcaster": "Rhie Cast"
+    "stadium": "잠실야구장",
+    "broadcaster": "KBS N Sports"
   },
   {
     "id": "KIA Tigers-vs-KT Wiz",
@@ -32,7 +32,7 @@
     "team2": "KT Wiz",
     "score1": 4,
     "score2": 14,
-    "stadium": "Suwon",
+    "stadium": "광주기아챔피언스필드",
     "broadcaster": "SBS Sports"
   },
   {
@@ -41,7 +41,7 @@
     "team2": "SSG Landers",
     "score1": 0,
     "score2": 11,
-    "stadium": "Incheon",
+    "stadium": "SSG 랜더스필드",
     "broadcaster": "KBS N Sports"
   },
   {
@@ -50,8 +50,8 @@
     "team2": "Lotte Giants",
     "score1": 14,
     "score2": 18,
-    "stadium": "Suwon",
-    "broadcaster": "Rhie Cast"
+    "stadium": "사직야구장",
+    "broadcaster": "KBS N Sports"
   },
   {
     "id": "KIA Tigers-vs-Hanwha Eagles",
@@ -59,7 +59,7 @@
     "team2": "Hanwha Eagles",
     "score1": 16,
     "score2": 9,
-    "stadium": "Daegu",
+    "stadium": "힌화생명 이글스파크",
     "broadcaster": "KBS N Sports"
   },
   {
@@ -68,7 +68,7 @@
     "team2": "NC Dinos",
     "score1": 8,
     "score2": 13,
-    "stadium": "Gwangju",
+    "stadium": "광주기아챔피언스필드",
     "broadcaster": "KBS N Sports"
   },
   {
@@ -77,7 +77,7 @@
     "team2": "Kiwoom Heroes",
     "score1": 15,
     "score2": 19,
-    "stadium": "Gwangju",
+    "stadium": "광주기아챔피언스필드",
     "broadcaster": "SPOTV"
   },
   {
@@ -86,8 +86,8 @@
     "team2": "LG Twins",
     "score1": 3,
     "score2": 19,
-    "stadium": "Jamsil",
-    "broadcaster": "Rhie Cast"
+    "stadium": "대구삼성라이온즈파크",
+    "broadcaster": "SPOTV"
   },
   {
     "id": "Samsung Lions-vs-Doosan Bears",
@@ -95,7 +95,7 @@
     "team2": "Doosan Bears",
     "score1": 5,
     "score2": 7,
-    "stadium": "Changwon",
+    "stadium": "대구삼성라이온즈파크",
     "broadcaster": "SBS Sports"
   },
   {
@@ -104,7 +104,7 @@
     "team2": "KT Wiz",
     "score1": 13,
     "score2": 3,
-    "stadium": "Jamsil",
+    "stadium": "대구삼성라이온즈파크",
     "broadcaster": "SPOTV"
   },
   {
@@ -113,7 +113,7 @@
     "team2": "SSG Landers",
     "score1": 2,
     "score2": 2,
-    "stadium": "Daegu",
+    "stadium": "대구삼성라이온즈파크",
     "broadcaster": "SBS Sports"
   },
   {
@@ -122,7 +122,7 @@
     "team2": "Lotte Giants",
     "score1": 14,
     "score2": 1,
-    "stadium": "Daegu",
+    "stadium": "대구삼성라이온즈파크",
     "broadcaster": "SPOTV"
   },
   {
@@ -131,7 +131,7 @@
     "team2": "Hanwha Eagles",
     "score1": 7,
     "score2": 9,
-    "stadium": "Changwon",
+    "stadium": "대구삼성라이온즈파크",
     "broadcaster": "KBS N Sports"
   },
   {
@@ -140,8 +140,8 @@
     "team2": "NC Dinos",
     "score1": 18,
     "score2": 1,
-    "stadium": "Incheon",
-    "broadcaster": "Rhie Cast"
+    "stadium": "대구삼성라이온즈파크",
+    "broadcaster": "SPOTV"
   },
   {
     "id": "Samsung Lions-vs-Kiwoom Heroes",
@@ -149,7 +149,7 @@
     "team2": "Kiwoom Heroes",
     "score1": 11,
     "score2": 19,
-    "stadium": "Daegu",
+    "stadium": "고척스카이돔",
     "broadcaster": "SBS Sports"
   },
   {
@@ -158,7 +158,7 @@
     "team2": "Doosan Bears",
     "score1": 10,
     "score2": 9,
-    "stadium": "Sajik",
+    "stadium": "잠실야구장",
     "broadcaster": "MBC Sports+"
   },
   {
@@ -167,7 +167,7 @@
     "team2": "KT Wiz",
     "score1": 11,
     "score2": 13,
-    "stadium": "Sajik",
+    "stadium": "수원KT위즈파크",
     "broadcaster": "MBC Sports+"
   },
   {
@@ -176,7 +176,7 @@
     "team2": "SSG Landers",
     "score1": 12,
     "score2": 2,
-    "stadium": "Incheon",
+    "stadium": "잠실야구장",
     "broadcaster": "SPOTV"
   },
   {
@@ -185,7 +185,7 @@
     "team2": "Lotte Giants",
     "score1": 1,
     "score2": 5,
-    "stadium": "Jamsil",
+    "stadium": "잠실야구장",
     "broadcaster": "KBS N Sports"
   },
   {
@@ -194,7 +194,7 @@
     "team2": "Hanwha Eagles",
     "score1": 9,
     "score2": 3,
-    "stadium": "Incheon",
+    "stadium": "잠실야구장",
     "broadcaster": "MBC Sports+"
   },
   {
@@ -203,7 +203,7 @@
     "team2": "NC Dinos",
     "score1": 18,
     "score2": 9,
-    "stadium": "Sajik",
+    "stadium": "창원NC파크",
     "broadcaster": "SBS Sports"
   },
   {
@@ -212,8 +212,8 @@
     "team2": "Kiwoom Heroes",
     "score1": 8,
     "score2": 3,
-    "stadium": "Daejeon",
-    "broadcaster": "Rhie Cast"
+    "stadium": "잠실야구장",
+    "broadcaster": "SPOTV"
   },
   {
     "id": "Doosan Bears-vs-KT Wiz",
@@ -221,7 +221,7 @@
     "team2": "KT Wiz",
     "score1": 10,
     "score2": 1,
-    "stadium": "Changwon",
+    "stadium": "수원KT위즈파크",
     "broadcaster": "SPOTV"
   },
   {
@@ -230,7 +230,7 @@
     "team2": "SSG Landers",
     "score1": 7,
     "score2": 5,
-    "stadium": "Daejeon",
+    "stadium": "ssg랜더스필드",
     "broadcaster": "KBS N Sports"
   },
   {
@@ -239,7 +239,7 @@
     "team2": "Lotte Giants",
     "score1": 11,
     "score2": 11,
-    "stadium": "Jamsil",
+    "stadium": "사직야구장",
     "broadcaster": "SBS Sports"
   },
   {
@@ -248,7 +248,7 @@
     "team2": "Hanwha Eagles",
     "score1": 7,
     "score2": 17,
-    "stadium": "Incheon",
+    "stadium": "한화생명 이글스파크",
     "broadcaster": "MBC Sports+"
   },
   {
@@ -257,7 +257,7 @@
     "team2": "NC Dinos",
     "score1": 14,
     "score2": 6,
-    "stadium": "Gwangju",
+    "stadium": "창원NC파크",
     "broadcaster": "SPOTV"
   },
   {
@@ -266,7 +266,7 @@
     "team2": "Kiwoom Heroes",
     "score1": 12,
     "score2": 9,
-    "stadium": "Gwangju",
+    "stadium": "잠실야구장",
     "broadcaster": "SBS Sports"
   },
   {
@@ -275,7 +275,7 @@
     "team2": "SSG Landers",
     "score1": 7,
     "score2": 17,
-    "stadium": "Jamsil",
+    "stadium": "ssg랜더스필드",
     "broadcaster": "SPOTV"
   },
   {
@@ -284,7 +284,7 @@
     "team2": "Lotte Giants",
     "score1": 13,
     "score2": 6,
-    "stadium": "Gwangju",
+    "stadium": "사직야구장",
     "broadcaster": "KBS N Sports"
   },
   {
@@ -293,7 +293,7 @@
     "team2": "Hanwha Eagles",
     "score1": 5,
     "score2": 13,
-    "stadium": "Suwon",
+    "stadium": "수원KT위즈파크",
     "broadcaster": "KBS N Sports"
   },
   {
@@ -302,7 +302,7 @@
     "team2": "NC Dinos",
     "score1": 3,
     "score2": 3,
-    "stadium": "Incheon",
+    "stadium": "창원NC파크",
     "broadcaster": "MBC Sports+"
   },
   {
@@ -311,7 +311,7 @@
     "team2": "Kiwoom Heroes",
     "score1": 12,
     "score2": 13,
-    "stadium": "Daegu",
+    "stadium": "고척스카이돔",
     "broadcaster": "MBC Sports+"
   },
   {
@@ -320,7 +320,7 @@
     "team2": "Lotte Giants",
     "score1": 10,
     "score2": 6,
-    "stadium": "Jamsil",
+    "stadium": "사직야구장",
     "broadcaster": "MBC Sports+"
   },
   {
@@ -329,8 +329,8 @@
     "team2": "Hanwha Eagles",
     "score1": 0,
     "score2": 8,
-    "stadium": "Daegu",
-    "broadcaster": "Rhie Cast"
+    "stadium": "한화생명 이글스파크",
+    "broadcaster": "SBS Sports"
   },
   {
     "id": "SSG Landers-vs-NC Dinos",
@@ -338,7 +338,7 @@
     "team2": "NC Dinos",
     "score1": 5,
     "score2": 16,
-    "stadium": "Jamsil",
+    "stadium": "창원NC파크",
     "broadcaster": "MBC Sports+"
   },
   {
@@ -347,7 +347,7 @@
     "team2": "Kiwoom Heroes",
     "score1": 1,
     "score2": 18,
-    "stadium": "Suwon",
+    "stadium": "고척스카이돔",
     "broadcaster": "SBS Sports"
   },
   {
@@ -356,8 +356,8 @@
     "team2": "Hanwha Eagles",
     "score1": 13,
     "score2": 16,
-    "stadium": "Daejeon",
-    "broadcaster": "Rhie Cast"
+    "stadium": "사직야구장",
+    "broadcaster": "MBC Sports+"
   },
   {
     "id": "Lotte Giants-vs-NC Dinos",
@@ -365,8 +365,8 @@
     "team2": "NC Dinos",
     "score1": 12,
     "score2": 14,
-    "stadium": "Gwangju",
-    "broadcaster": "Rhie Cast"
+    "stadium": "창원NC파크",
+    "broadcaster": "MBC Sports+"
   },
   {
     "id": "Lotte Giants-vs-Kiwoom Heroes",
@@ -374,7 +374,7 @@
     "team2": "Kiwoom Heroes",
     "score1": 7,
     "score2": 10,
-    "stadium": "Changwon",
+    "stadium": "고척스카이돔",
     "broadcaster": "SBS Sports"
   },
   {
@@ -383,8 +383,8 @@
     "team2": "NC Dinos",
     "score1": 5,
     "score2": 13,
-    "stadium": "Gocheok",
-    "broadcaster": "Rhie Cast"
+    "stadium": "한화생명 이글스파크",
+    "broadcaster": "MBC Sports+"
   },
   {
     "id": "Hanwha Eagles-vs-Kiwoom Heroes",
@@ -392,7 +392,7 @@
     "team2": "Kiwoom Heroes",
     "score1": 11,
     "score2": 4,
-    "stadium": "Gocheok",
+    "stadium": "한화생명 이글스파크",
     "broadcaster": "MBC Sports+"
   },
   {
@@ -401,7 +401,7 @@
     "team2": "Kiwoom Heroes",
     "score1": 17,
     "score2": 7,
-    "stadium": "Gwangju",
+    "stadium": "창원NC파크",
     "broadcaster": "MBC Sports+"
   }
 ]

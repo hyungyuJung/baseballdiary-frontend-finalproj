@@ -17,11 +17,11 @@ export interface ViewingInfo {
 
 export interface Diary {
     id: string;
-    date: Date;
-    gameInfo?: GameInfo;
-    viewingInfo?: ViewingInfo;
+    date: string; // ISO Date String YYYY-MM-DD
+    gameInfo: GameInfo;
+    viewingInfo: ViewingInfo;
     content: string; // Memo
     photoUrl?: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string; // ISO Timestamp
+    updatedAt: string; // ISO Timestamp
 }

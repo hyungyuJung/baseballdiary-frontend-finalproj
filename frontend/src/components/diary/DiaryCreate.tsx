@@ -47,8 +47,9 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        const dateStr = formatDate(date.getFullYear(), date.getMonth(), date.getDate());
         const newDiary: Omit<Diary, 'id' | 'createdAt' | 'updatedAt'> = {
-            date,
+            date: dateStr,
             gameInfo: {
                 myTeam,
                 opponentTeam,
@@ -134,10 +135,10 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
                                         type="button"
                                         onClick={() => setResult(r as GameResult)}
                                         className={`flex - 1 py - 3 rounded - lg font - bold transition - all transform hover: scale - [1.02] ${result === r ?
-                                                (r === 'win' ? 'bg-accent-win text-white' :
-                                                    r === 'loss' ? 'bg-accent-loss text-white' :
-                                                        r === 'draw' ? 'bg-accent-draw text-black' : 'bg-accent-cancel text-white')
-                                                : 'bg-bg-tertiary text-text-secondary'
+                                            (r === 'win' ? 'bg-accent-win text-white' :
+                                                r === 'loss' ? 'bg-accent-loss text-white' :
+                                                    r === 'draw' ? 'bg-accent-draw text-black' : 'bg-accent-cancel text-white')
+                                            : 'bg-bg-tertiary text-text-secondary'
                                             } `}
                                     >
                                         {r === 'win' ? '승리' : r === 'loss' ? '패배' : r === 'draw' ? '무승부' : '취소'}

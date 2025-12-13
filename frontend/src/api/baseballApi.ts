@@ -1,3 +1,5 @@
+import type { Diary } from '../types/Diary';
+
 const BASE_URL = 'http://localhost:3000/api';
 
 export interface GameDataResponse {
@@ -49,6 +51,64 @@ export const baseballApi = {
         } catch (error) {
             console.error(error);
             return null;
+        }
+    },
+
+    // --- Diary CRUD ---
+
+    // Get Diary by Date
+    getDiary: async (date: string): Promise<Diary | null> => {
+        try {
+            const res = await fetch(`${BASE_URL}/diaries/${date}`);
+            if (res.status === 404) return null;
+            if (!res.ok) throw new Error('Failed to fetch diary');
+            return await res.json();
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    },
+
+    // Create Diary
+    createDiary: async (diary: Omit<Diary, 'id' | 'createdAt' | 'updatedAt'>): Promise<boolean> => {
+        try {
+            const res = await fetch(`${BASE_URL}/diaries`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(diary),
+            });
+            return res.ok;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    },
+
+    // Update Diary
+    updateDiary: async (date: string, diary: Diary): Promise<boolean> => {
+        try {
+            const res = await fetch(`${BASE_URL}/diaries/${date}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(diary),
+            });
+            return res.ok;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    },
+
+    // Delete Diary
+    deleteDiary: async (date: string): Promise<boolean> => {
+        try {
+            const res = await fetch(`${BASE_URL}/diaries/${date}`, {
+                method: 'DELETE',
+            });
+            return res.ok;
+        } catch (error) {
+            console.error(error);
+            return false;
         }
     }
 };
