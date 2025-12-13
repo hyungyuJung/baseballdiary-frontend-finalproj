@@ -2,15 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { KBO_TEAMS } from '../../constants/baseball';
 import { baseballApi } from '../../api/baseballApi';
+import { useToast } from '../../context/ToastContext';
 
 const Header: React.FC = () => {
     const [myTeam, setMyTeam] = useState<string>('');
     const location = useLocation();
+    const { showToast } = useToast();
 
     useEffect(() => {
         const fetchTeam = async () => {
-            const team = await baseballApi.getUserTeam();
-            if (team) setMyTeam(team);
+            try {
+                const team = await baseballApi.getUserTeam();
+                if (team) setMyTeam(team);
+            } catch (error) {
+                console.error("Failed to load user team", error);
+                // Silent fail for initial load or show toast? Silent is better usually, or mild.
+            }
         };
         fetchTeam();
     }, []);
@@ -19,7 +26,13 @@ const Header: React.FC = () => {
         const newTeam = e.target.value;
         setMyTeam(newTeam);
         if (newTeam) {
-            await baseballApi.updateUserTeam(newTeam);
+            try {
+                await baseballApi.updateUserTeam(newTeam);
+                showToast(`Favorite team updated to ${newTeam}!`, 'success');
+            } catch (_error) {
+                showToast('Failed to update favorite team', 'error');
+                // Revert state if needed? For now, we trust.
+            }
         }
     };
 

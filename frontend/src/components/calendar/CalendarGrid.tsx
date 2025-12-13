@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import type { DiarySummary } from '../../types/Diary';
 import { baseballApi } from '../../api/baseballApi';
 import { getDaysInMonth, getFirstDayOfMonth, formatDate } from '../../utils/dateUtils';
+import { useToast } from '../../context/ToastContext';
 
 interface CalendarGridProps {
     currentDate: Date;
@@ -14,18 +15,22 @@ const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const CalendarGrid: React.FC<CalendarGridProps> = ({ currentDate, onDateClick, refreshKey }) => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
+    const { showToast } = useToast();
 
     const [summaries, setSummaries] = useState<DiarySummary[]>([]);
 
     useEffect(() => {
         const fetchSummaries = async () => {
-            // month is 0-indexed in Date, but 1-indexed in API usually. 
-            // My API expects 1-based month.
-            const data = await baseballApi.getMonthlySummaries(year, month + 1);
-            setSummaries(data);
+            try {
+                const data = await baseballApi.getMonthlySummaries(year, month + 1);
+                setSummaries(data);
+            } catch (error) {
+                console.error(error);
+                showToast('Failed to load calendar summaries', 'error');
+            }
         };
         fetchSummaries();
-    }, [year, month, refreshKey]);
+    }, [year, month, refreshKey, showToast]);
 
     const daysInMonth = getDaysInMonth(year, month);
     const firstDayOfMonth = getFirstDayOfMonth(year, month);

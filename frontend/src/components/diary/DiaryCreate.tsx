@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
-import type { Diary, GameResult, ViewingType } from '../../types/Diary';
+import React, { useEffect, useState } from 'react';
+import type { Diary, GameResult } from '../../types/Diary';
 import { KBO_TEAMS, VIEWING_TYPES } from '../../constants/baseball';
 import { baseballApi } from '../../api/baseballApi';
 import { formatDate } from '../../utils/dateUtils';
+import { useToast } from '../../context/ToastContext';
 
 interface DiaryCreateProps {
     date: Date;
@@ -11,59 +12,85 @@ interface DiaryCreateProps {
 }
 
 const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) => {
-    // Local state for form fields
-    const [myTeam, setMyTeam] = React.useState('');
-    const [opponentTeam, setOpponentTeam] = React.useState('');
-    const [myScore, setMyScore] = React.useState<number>(0);
-    const [opponentScore, setOpponentScore] = React.useState<number>(0);
-    const [result, setResult] = React.useState<GameResult>('win');
-    const [stadium, setStadium] = React.useState('');
-    const [broadcaster, setBroadcaster] = React.useState('');
-    const [viewingType, setViewingType] = React.useState<ViewingType>('home');
-    const [content, setContent] = React.useState('');
+    const { showToast } = useToast();
+    const [formData, setFormData] = useState<Partial<Diary>>({
+        date: formatDate(date.getFullYear(), date.getMonth(), date.getDate()),
+        gameInfo: {
+            myTeam: '',
+            opponentTeam: '',
+            myScore: 0,
+            opponentScore: 0,
+            result: 'win',
+            stadium: '',
+            broadcaster: '',
+        },
+        viewingInfo: {
+            type: 'home',
+        },
+        content: '',
+        photoUrl: undefined,
+    });
 
     // Auto-Fill Data on Mount
     useEffect(() => {
         const fetchGameData = async () => {
-            // Use YYYY-MM-DD format for API
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            const dateStr = `${year}-${month}-${day}`;
-
-            const data = await baseballApi.getRandomGame(dateStr);
-            if (data) {
-                setMyTeam(data.myTeam);
-                setOpponentTeam(data.opponentTeam);
-                setMyScore(data.myScore);
-                setOpponentScore(data.opponentScore);
-                setResult(data.result as GameResult);
-                setStadium(data.stadium);
-                setBroadcaster(data.broadcaster);
+            if (!formData.date) return;
+            try {
+                const dateStr = formData.date;
+                const data = await baseballApi.getRandomGame(dateStr);
+                if (data) {
+                    setFormData(prev => ({
+                        ...prev,
+                        gameInfo: {
+                            ...prev.gameInfo!,
+                            myTeam: data.myTeam,
+                            opponentTeam: data.opponentTeam,
+                            myScore: data.myScore,
+                            opponentScore: data.opponentScore,
+                            result: data.result as GameResult,
+                            stadium: data.stadium,
+                            broadcaster: data.broadcaster
+                        }
+                    }));
+                    showToast('Game data auto-filled!', 'success');
+                }
+            } catch (error) {
+                console.warn("Auto-fill failed", error);
+                // showToast("Could not auto-fill game data", 'info');
             }
         };
         fetchGameData();
-    }, [date]);
+    }, [formData.date, showToast]);
+
+    const handleInputChange = (field: keyof Diary, value: any, subField?: string) => {
+        setFormData(prev => {
+            if (subField) {
+                return {
+                    ...prev,
+                    [field]: {
+                        ...(prev[field as keyof Diary] as object),
+                        [subField]: value
+                    }
+                };
+            }
+            return { ...prev, [field]: value };
+        });
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const dateStr = formatDate(date.getFullYear(), date.getMonth(), date.getDate());
+        // Ensure all required fields are present before submitting
+        if (!formData.date || !formData.gameInfo || !formData.viewingInfo || formData.content === undefined) {
+            showToast("Please fill in all required fields.", 'error');
+            return;
+        }
+
         const newDiary: Omit<Diary, 'id' | 'createdAt' | 'updatedAt'> = {
-            date: dateStr,
-            gameInfo: {
-                myTeam,
-                opponentTeam,
-                myScore,
-                opponentScore,
-                result,
-                stadium,
-                broadcaster
-            },
-            viewingInfo: {
-                type: viewingType
-            },
-            content,
-            photoUrl: undefined, // Optional
+            date: formData.date,
+            gameInfo: formData.gameInfo as any, // Type assertion for safety
+            viewingInfo: formData.viewingInfo as any,
+            content: formData.content,
+            photoUrl: formData.photoUrl,
         };
         onSubmit(newDiary);
     };
@@ -89,7 +116,8 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm font-medium text-text-secondary">응원 팀</label>
                                 <select
-                                    value={myTeam} onChange={(e) => setMyTeam(e.target.value)}
+                                    value={formData.gameInfo?.myTeam || ''}
+                                    onChange={(e) => handleInputChange('gameInfo', e.target.value, 'myTeam')}
                                     className="bg-bg-tertiary text-text-primary p-3 rounded-lg border border-transparent focus:border-brand-primary outline-none"
                                 >
                                     <option value="">팀 선택</option>
@@ -100,7 +128,8 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm font-medium text-text-secondary">상대 팀</label>
                                 <select
-                                    value={opponentTeam} onChange={(e) => setOpponentTeam(e.target.value)}
+                                    value={formData.gameInfo?.opponentTeam || ''}
+                                    onChange={(e) => handleInputChange('gameInfo', e.target.value, 'opponentTeam')}
                                     className="bg-bg-tertiary text-text-primary p-3 rounded-lg border border-transparent focus:border-brand-primary outline-none"
                                 >
                                     <option value="">팀 선택</option>
@@ -113,14 +142,18 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
                             <div className="flex items-center gap-2">
                                 <label className="text-sm font-medium text-text-secondary w-16">우리 점수</label>
                                 <input
-                                    type="number" value={myScore} onChange={(e) => setMyScore(Number(e.target.value))}
+                                    type="number"
+                                    value={formData.gameInfo?.myScore || 0}
+                                    onChange={(e) => handleInputChange('gameInfo', Number(e.target.value), 'myScore')}
                                     className="w-full bg-bg-tertiary text-text-primary p-3 rounded-lg border border-transparent focus:border-brand-primary outline-none text-center font-mono text-lg"
                                 />
                             </div>
                             <div className="flex items-center gap-2">
                                 <label className="text-sm font-medium text-text-secondary w-16">상대 점수</label>
                                 <input
-                                    type="number" value={opponentScore} onChange={(e) => setOpponentScore(Number(e.target.value))}
+                                    type="number"
+                                    value={formData.gameInfo?.opponentScore || 0}
+                                    onChange={(e) => handleInputChange('gameInfo', Number(e.target.value), 'opponentScore')}
                                     className="w-full bg-bg-tertiary text-text-primary p-3 rounded-lg border border-transparent focus:border-brand-primary outline-none text-center font-mono text-lg"
                                 />
                             </div>
@@ -133,8 +166,8 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
                                     <button
                                         key={r}
                                         type="button"
-                                        onClick={() => setResult(r as GameResult)}
-                                        className={`flex - 1 py - 3 rounded - lg font - bold transition - all transform hover: scale - [1.02] ${result === r ?
+                                        onClick={() => handleInputChange('gameInfo', r, 'result')}
+                                        className={`flex-1 py-3 rounded-lg font-bold transition-all transform hover:scale-[1.02] ${formData.gameInfo?.result === r ?
                                             (r === 'win' ? 'bg-accent-win text-white' :
                                                 r === 'loss' ? 'bg-accent-loss text-white' :
                                                     r === 'draw' ? 'bg-accent-draw text-black' : 'bg-accent-cancel text-white')
@@ -151,14 +184,20 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm font-medium text-text-secondary">구장</label>
                                 <input
-                                    type="text" value={stadium} onChange={(e) => setStadium(e.target.value)} placeholder="예: 잠실 야구장"
+                                    type="text"
+                                    value={formData.gameInfo?.stadium || ''}
+                                    onChange={(e) => handleInputChange('gameInfo', e.target.value, 'stadium')}
+                                    placeholder="예: 잠실 야구장"
                                     className="bg-bg-tertiary text-text-primary p-3 rounded-lg border border-transparent focus:border-brand-primary outline-none"
                                 />
                             </div>
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm font-medium text-text-secondary">방송사</label>
                                 <input
-                                    type="text" value={broadcaster} onChange={(e) => setBroadcaster(e.target.value)} placeholder="예: SPOTV"
+                                    type="text"
+                                    value={formData.gameInfo?.broadcaster || ''}
+                                    onChange={(e) => handleInputChange('gameInfo', e.target.value, 'broadcaster')}
+                                    placeholder="예: SPOTV"
                                     className="bg-bg-tertiary text-text-primary p-3 rounded-lg border border-transparent focus:border-brand-primary outline-none"
                                 />
                             </div>
@@ -175,8 +214,8 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
                                 <button
                                     key={type.value}
                                     type="button"
-                                    onClick={() => setViewingType(type.value as ViewingType)}
-                                    className={`px - 4 py - 2 rounded - full border transition - colors ${viewingType === type.value ? 'bg-brand-primary border-brand-primary text-white' : 'bg-transparent border-bg-tertiary text-text-secondary hover:border-brand-primary'} `}
+                                    onClick={() => handleInputChange('viewingInfo', type.value, 'type')}
+                                    className={`px-4 py-2 rounded-full border transition-colors ${formData.viewingInfo?.type === type.value ? 'bg-brand-primary border-brand-primary text-white' : 'bg-transparent border-bg-tertiary text-text-secondary hover:border-brand-primary'} `}
                                 >
                                     {type.label}
                                 </button>
@@ -200,7 +239,8 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
                         <div className="flex flex-col gap-2">
                             <label className="text-sm font-medium text-text-secondary">메모</label>
                             <textarea
-                                value={content} onChange={(e) => setContent(e.target.value)}
+                                value={formData.content || ''}
+                                onChange={(e) => handleInputChange('content', e.target.value)}
                                 className="w-full h-40 bg-bg-tertiary text-text-primary p-4 rounded-lg border border-transparent focus:border-brand-primary outline-none resize-none leading-relaxed"
                                 placeholder="오늘 경기의 승부처는 어디였나요?"
                             />

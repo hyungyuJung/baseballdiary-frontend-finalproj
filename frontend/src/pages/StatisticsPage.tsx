@@ -39,16 +39,26 @@ const StatsCard: React.FC<{ title: string; stats: StatsData }> = ({ title, stats
     );
 };
 
+import { useToast } from '../context/ToastContext';
+
+// ... (StatsCard definition)
+
 const StatisticsPage: React.FC = () => {
     const [stats, setStats] = useState<StatisticsResponse | null>(null);
+    const { showToast } = useToast();
 
     useEffect(() => {
         const fetchStats = async () => {
-            const data = await baseballApi.getStatistics();
-            setStats(data);
+            try {
+                const data = await baseballApi.getStatistics();
+                setStats(data);
+            } catch (error) {
+                console.error(error);
+                showToast('Failed to load statistics', 'error');
+            }
         };
         fetchStats();
-    }, []);
+    }, [showToast]);
 
     if (!stats) return <div className="min-h-screen bg-bg-primary text-text-primary flex items-center justify-center">Loading...</div>;
 
