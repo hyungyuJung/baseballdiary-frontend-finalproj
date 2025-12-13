@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { Diary, GameResult, ViewingType } from '../../types/Diary';
 import { KBO_TEAMS, VIEWING_TYPES } from '../../constants/baseball';
+import { baseballApi } from '../../api/baseballApi';
 import { formatDate } from '../../utils/dateUtils';
 
 interface DiaryCreateProps {
@@ -20,6 +21,29 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
     const [broadcaster, setBroadcaster] = React.useState('');
     const [viewingType, setViewingType] = React.useState<ViewingType>('home');
     const [content, setContent] = React.useState('');
+
+    // Auto-Fill Data on Mount
+    useEffect(() => {
+        const fetchGameData = async () => {
+            // Use YYYY-MM-DD format for API
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const dateStr = `${year}-${month}-${day}`;
+
+            const data = await baseballApi.getRandomGame(dateStr);
+            if (data) {
+                setMyTeam(data.myTeam);
+                setOpponentTeam(data.opponentTeam);
+                setMyScore(data.myScore);
+                setOpponentScore(data.opponentScore);
+                setResult(data.result as GameResult);
+                setStadium(data.stadium);
+                setBroadcaster(data.broadcaster);
+            }
+        };
+        fetchGameData();
+    }, [date]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -109,11 +133,12 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
                                         key={r}
                                         type="button"
                                         onClick={() => setResult(r as GameResult)}
-                                        className={`flex-1 py-3 rounded-lg font-bold transition-all transform hover:scale-[1.02] ${result === r ?
-                                            (r === 'win' ? 'bg-accent-win text-white' :
-                                                r === 'loss' ? 'bg-accent-loss text-white' :
-                                                    r === 'draw' ? 'bg-accent-draw text-black' : 'bg-accent-cancel text-white')
-                                            : 'bg-bg-tertiary text-text-secondary'}`}
+                                        className={`flex - 1 py - 3 rounded - lg font - bold transition - all transform hover: scale - [1.02] ${result === r ?
+                                                (r === 'win' ? 'bg-accent-win text-white' :
+                                                    r === 'loss' ? 'bg-accent-loss text-white' :
+                                                        r === 'draw' ? 'bg-accent-draw text-black' : 'bg-accent-cancel text-white')
+                                                : 'bg-bg-tertiary text-text-secondary'
+                                            } `}
                                     >
                                         {r === 'win' ? '승리' : r === 'loss' ? '패배' : r === 'draw' ? '무승부' : '취소'}
                                     </button>
@@ -150,7 +175,7 @@ const DiaryCreate: React.FC<DiaryCreateProps> = ({ date, onCancel, onSubmit }) =
                                     key={type.value}
                                     type="button"
                                     onClick={() => setViewingType(type.value as ViewingType)}
-                                    className={`px-4 py-2 rounded-full border transition-colors ${viewingType === type.value ? 'bg-brand-primary border-brand-primary text-white' : 'bg-transparent border-bg-tertiary text-text-secondary hover:border-brand-primary'}`}
+                                    className={`px - 4 py - 2 rounded - full border transition - colors ${viewingType === type.value ? 'bg-brand-primary border-brand-primary text-white' : 'bg-transparent border-bg-tertiary text-text-secondary hover:border-brand-primary'} `}
                                 >
                                     {type.label}
                                 </button>

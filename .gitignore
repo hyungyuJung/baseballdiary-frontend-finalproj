@@ -113,8 +113,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Backend Data
-backend/data/userteam.json
 
 # OS
 .DS_Store

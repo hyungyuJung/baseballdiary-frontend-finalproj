@@ -11,6 +11,7 @@ app.use(express.json());
 
 const DATA_DIR = path.join(__dirname, 'data');
 const USER_TEAM_FILE = path.join(DATA_DIR, 'userteam.json');
+const MOCK_DATA_FILE = path.join(DATA_DIR, 'mockdata.json');
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -33,19 +34,21 @@ const saveUserTeam = (team) => {
     fs.writeFileSync(USER_TEAM_FILE, JSON.stringify({ team }));
 };
 
-// KBO Teams
+// Helper to get Mock Data
+const getMockData = () => {
+    if (!fs.existsSync(MOCK_DATA_FILE)) return [];
+    try {
+        const data = fs.readFileSync(MOCK_DATA_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (e) {
+        return [];
+    }
+};
+
 const TEAMS = [
     'KIA Tigers', 'Samsung Lions', 'LG Twins', 'Doosan Bears', 'KT Wiz',
     'SSG Landers', 'Lotte Giants', 'Hanwha Eagles', 'NC Dinos', 'Kiwoom Heroes'
 ];
-
-// Generate 45 Matchups (10C2)
-const MATCHUPS = [];
-for (let i = 0; i < TEAMS.length; i++) {
-    for (let j = i + 1; j < TEAMS.length; j++) {
-        MATCHUPS.push([TEAMS[i], TEAMS[j]]);
-    }
-}
 
 // --- APIs ---
 
@@ -67,37 +70,44 @@ app.post('/api/user/team', (req, res) => {
 
 // 3. Get Random Game Data (Auto-Fill)
 app.get('/api/games/random', (req, res) => {
-    const { date } = req.query; // Expect YYYY-MM-DD
+    const { date } = req.query;
     const userTeam = getUserTeam();
+    const mockData = getMockData();
 
-    // Filter matchups to include userTeam if it exists
-    let candidateMatchups = MATCHUPS;
+    if (mockData.length === 0) {
+        return res.status(500).json({ error: 'No mock data available' });
+    }
+
+    let candidateMatchups = mockData;
     let myTeamName = userTeam;
 
+    // Filter matchups if user has a team
     if (userTeam) {
-        candidateMatchups = MATCHUPS.filter(m => m.includes(userTeam));
+        candidateMatchups = mockData.filter(m => m.team1 === userTeam || m.team2 === userTeam);
     }
 
-    // Pick random matchup
-    const matchup = candidateMatchups[Math.floor(Math.random() * candidateMatchups.length)];
+    // Fallback if no matchups found (logic error) or no user team
+    if (candidateMatchups.length === 0) {
+        candidateMatchups = mockData;
+    }
 
-    // If no userTeam, pick one random from matchup as "myTeam"
+    // Pick random match
+    const match = candidateMatchups[Math.floor(Math.random() * candidateMatchups.length)];
+
+    // If we didn't have a user team, pick one side as "mine"
     if (!myTeamName) {
-        myTeamName = matchup[Math.floor(Math.random() * 2)];
+        myTeamName = Math.random() > 0.5 ? match.team1 : match.team2;
     }
 
-    const opponentTeamName = matchup[0] === myTeamName ? matchup[1] : matchup[0];
-
-    // Random Scores
-    const myScore = Math.floor(Math.random() * 15);
-    const opponentScore = Math.floor(Math.random() * 15);
+    // Determine perspective
+    const isTeam1 = match.team1 === myTeamName;
+    const opponentTeamName = isTeam1 ? match.team2 : match.team1;
+    const myScore = isTeam1 ? match.score1 : match.score2;
+    const opponentScore = isTeam1 ? match.score2 : match.score1;
 
     let result = 'draw';
     if (myScore > opponentScore) result = 'win';
     if (myScore < opponentScore) result = 'loss';
-
-    const STADIUMS = ['Jamsil', 'Sajik', 'Daejeon', 'Gwangju', 'Daegu', 'Changwon', 'Incheon', 'Suwon', 'Gocheok'];
-    const BROADCASTERS = ['SPOTV', 'KBS N Sports', 'MBC Sports+', 'SBS Sports', 'Rhie Cast'];
 
     const gameData = {
         date: date || new Date().toISOString().split('T')[0],
@@ -106,8 +116,8 @@ app.get('/api/games/random', (req, res) => {
         myScore,
         opponentScore,
         result,
-        stadium: STADIUMS[Math.floor(Math.random() * STADIUMS.length)],
-        broadcaster: BROADCASTERS[Math.floor(Math.random() * BROADCASTERS.length)]
+        stadium: match.stadium,
+        broadcaster: match.broadcaster
     };
 
     res.json(gameData);
