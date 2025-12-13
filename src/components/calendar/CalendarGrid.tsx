@@ -43,7 +43,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({ currentDate }) => {
                 {days.map((day, index) => (
                     <div
                         key={index}
-                        className={`bg-bg-secondary h-24 p-2 relative ${day ? 'hover:bg-bg-tertiary cursor-pointer transition-colors' : ''}`}
+                        className={`${day ? 'bg-bg-secondary hover:bg-bg-tertiary cursor-pointer' : ''} h-24 p-2 relative transition-colors`}
                     >
                         {day && (
                             <>
